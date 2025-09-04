@@ -1,0 +1,30 @@
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+
+# Logs
+*.log
+
+# Configuración local
+appsettings.Development.json
+
+# IDE-specific
+.vs/
+*.swp
+*.tmp
+
+# OS crap
+.DS_Store
+Thumbs.db
+
+# Others
+*.dbmdl
+*.bak
+*.cache
