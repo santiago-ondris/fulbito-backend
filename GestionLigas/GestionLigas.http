@@ -1,0 +1,6 @@
+@GestionLigas_HostAddress = http://localhost:5213
+
+GET {{GestionLigas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
