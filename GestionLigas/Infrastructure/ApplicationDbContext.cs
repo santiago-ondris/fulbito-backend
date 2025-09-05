@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Liga> Ligas { get; set; }
     public DbSet<ConfiguracionLiga> ConfiguracionesLiga { get; set; }
+    public DbSet<MetricaLiga> MetricasLiga { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {

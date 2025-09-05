@@ -11,11 +11,16 @@ public class LigaConfiguration : IEntityTypeConfiguration<Liga>
         builder.Property(e => e.Nombre).IsRequired().HasMaxLength(100);
         builder.Property(e => e.UsuarioId).IsRequired().HasMaxLength(50);
         builder.Property(e => e.FechaCreacion).IsRequired();
-        
+
         // Relación uno a uno con ConfiguracionLiga
         builder.HasOne(e => e.Configuracion)
                .WithOne(e => e.Liga)
                .HasForeignKey<ConfiguracionLiga>(e => e.LigaId)
                .OnDelete(DeleteBehavior.Cascade);
+               
+        builder.HasMany(e => e.Metricas)
+                .WithOne(e => e.Liga)
+                .HasForeignKey(e => e.LigaId)
+                .OnDelete(DeleteBehavior.Cascade);
     }
 }

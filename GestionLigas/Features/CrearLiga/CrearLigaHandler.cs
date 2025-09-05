@@ -16,7 +16,7 @@ public class CrearLigaHandler : IRequestHandler<CrearLigaRequest, CrearLigaRespo
         // Por ahora usuario hardcodeado
         var usuarioId = "usuario-temporal";
 
-        var liga = new Liga 
+        var liga = new Liga
         {
             Nombre = request.Nombre,
             UsuarioId = usuarioId,
@@ -26,20 +26,40 @@ public class CrearLigaHandler : IRequestHandler<CrearLigaRequest, CrearLigaRespo
                 Formato = request.Formato,
                 ArqueroObligatorio = request.ArqueroObligatorio,
                 CantidadMinimaArqueros = request.CantidadMinimaArqueros,
-                PosicionesDisponibles = request.PosicionesDisponibles,
                 DiasJuego = request.DiasJuego,
                 Horarios = request.Horarios,
                 ReglasAdicionales = request.ReglasAdicionales
             }
         };
 
+        foreach (var metricaRequest in request.Metricas)
+        {
+            var metrica = new MetricaLiga
+            {
+                Liga = liga,
+                Tipo = metricaRequest.Tipo,
+                Puntos = metricaRequest.Puntos,
+                ParametroNumerico = metricaRequest.ParametroNumerico,
+                EsObligatoria = EsMetricaObligatoria(metricaRequest.Tipo)
+            };
+            _context.MetricasLiga.Add(metrica);
+        }
+
         _context.Ligas.Add(liga);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return new CrearLigaResponse 
+        return new CrearLigaResponse
         {
             LigaId = liga.Id,
             Mensaje = $"Liga '{liga.Nombre}' creada exitosamente"
         };
+    }
+    
+    private static bool EsMetricaObligatoria(TipoMetrica tipo)
+    {
+        return tipo is TipoMetrica.PartidoJugado or 
+                    TipoMetrica.PartidoGanado or 
+                    TipoMetrica.PartidoEmpatado or 
+                    TipoMetrica.PartidoPerdido;
     }
 }
