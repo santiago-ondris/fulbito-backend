@@ -6,6 +6,10 @@ using System.Text;
 using Fulbito.Core.Database;
 using Fulbito.Core.Common.Entities;
 using Fulbito.Core.Features.Authentication;
+using Fulbito.Core.Features.CreateLeague;
+using Fulbito.Core.Features.ViewLeague;
+using Fulbito.Core.Features.AddMatch;
+using Fulbito.Core.Features.ManageLeague;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 
 // Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -64,6 +69,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication();
 
 builder.Services.AddAuthenticationFeatures();
+builder.Services.AddCreateLeagueFeatures();
+builder.Services.AddViewLeagueFeatures();
+builder.Services.AddMatchFeatures();
+builder.Services.AddManageLeagueFeatures();
 
 var app = builder.Build();
 
@@ -82,5 +91,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapAuthenticationEndpoints();
+app.MapCreateLeagueEndpoints();
+app.MapViewLeagueEndpoints();
+app.MapAddMatchEndpoints();
+app.MapManageLeagueEndpoints();
 
 app.Run();
