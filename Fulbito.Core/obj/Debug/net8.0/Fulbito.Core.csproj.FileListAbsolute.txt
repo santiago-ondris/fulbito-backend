@@ -1,0 +1,14 @@
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\bin\Debug\net8.0\Fulbito.Core.deps.json
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\bin\Debug\net8.0\Fulbito.Core.runtimeconfig.json
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\bin\Debug\net8.0\Fulbito.Core.dll
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\bin\Debug\net8.0\Fulbito.Core.pdb
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.csproj.AssemblyReference.cache
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.AssemblyInfoInputs.cache
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.AssemblyInfo.cs
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.csproj.CoreCompileInputs.cache
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.dll
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\refint\Fulbito.Core.dll
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.pdb
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\Fulbito.Core.genruntimeconfig.cache
+C:\Users\Administrador\Documents\proyectos\fulbito\backend\Fulbito.Core\obj\Debug\net8.0\ref\Fulbito.Core.dll

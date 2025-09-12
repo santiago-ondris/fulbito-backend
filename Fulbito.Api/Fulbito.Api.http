@@ -1,0 +1,6 @@
+@Fulbito.Api_HostAddress = http://localhost:5204
+
+GET {{Fulbito.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
