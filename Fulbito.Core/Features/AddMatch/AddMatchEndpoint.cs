@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,23 @@ public static class AddMatchEndpoint
             Guid leagueId,
             [FromBody] AddMatchRequest request,
             AddMatchHandler handler,
-            AddMatchValidator validator) =>
+            AddMatchValidator validator,
+            IHttpContextAccessor httpContextAccessor) => 
         {
-            // Crear el command con el leagueId del route
+            Console.WriteLine($"=== ENDPOINT DEBUG ===");
+            Console.WriteLine($"LeagueId: {leagueId}");
+            Console.WriteLine($"Request received: {request != null}");
+            
+            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out var userId))
+            {
+                return Results.Unauthorized();
+            }
+            
             var command = new AddMatchCommand
             {
                 LeagueId = leagueId,
+                UserId = userId,
                 Team1Score = request.Team1Score,
                 Team2Score = request.Team2Score,
                 MatchDate = request.MatchDate,
@@ -26,13 +38,19 @@ public static class AddMatchEndpoint
                 Team2Players = request.Team2Players
             };
 
-            // Validar
+            Console.WriteLine($"Command created with UserId: {userId}, validating...");
+            
+            // Validar (ahora debería pasar)
             var validationResult = await validator.ValidateAsync(command);
-            if (!validationResult.IsValid)
+            Console.WriteLine($"Validation passed: {validationResult.IsValid}");
+            
+            if(!validationResult.IsValid)
             {
+                Console.WriteLine($"Validation errors: {string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage))}");
                 return Results.BadRequest(validationResult.Errors);
             }
 
+            Console.WriteLine($"Calling handler...");
             // Ejecutar
             var result = await handler.Handle(command);
             
