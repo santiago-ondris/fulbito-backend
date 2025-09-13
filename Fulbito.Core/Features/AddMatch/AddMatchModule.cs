@@ -8,6 +8,9 @@ public static class AddMatchModule
     {
         // Handlers
         services.AddScoped<AddMatchHandler>();
+
+        // Validators
+        services.AddScoped<AddMatchValidator>();
         
         return services;
     }

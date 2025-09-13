@@ -10,6 +10,7 @@ using Fulbito.Core.Features.CreateLeague;
 using Fulbito.Core.Features.ViewLeague;
 using Fulbito.Core.Features.AddMatch;
 using Fulbito.Core.Features.ManageLeague;
+using Fulbito.Core.Features.AdminLeague;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,7 @@ builder.Services.AddCreateLeagueFeatures();
 builder.Services.AddViewLeagueFeatures();
 builder.Services.AddMatchFeatures();
 builder.Services.AddManageLeagueFeatures();
+builder.Services.AddAdminLeagueFeatures();
 
 var app = builder.Build();
 
@@ -95,5 +97,6 @@ app.MapCreateLeagueEndpoints();
 app.MapViewLeagueEndpoints();
 app.MapAddMatchEndpoints();
 app.MapManageLeagueEndpoints();
+app.MapAdminLeagueEndpoints();
 
 app.Run();
