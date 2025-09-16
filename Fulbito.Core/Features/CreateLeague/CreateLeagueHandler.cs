@@ -55,8 +55,10 @@ public class CreateLeagueHandler
             PointsPerGoal = command.PointsPerGoal,
             IsWinStreakEnabled = command.IsWinStreakEnabled,
             PointsPerWinInStreak = command.PointsPerWinInStreak,
+            MinWinStreakToActivate = command.MinWinStreakToActivate,
             IsLossStreakEnabled = command.IsLossStreakEnabled,
             PointsPerLossInStreak = command.PointsPerLossInStreak,
+            MinLossStreakToActivate = command.MinLossStreakToActivate,
             IsMvpEnabled = command.IsMvpEnabled,
             PointsPerMvp = command.PointsPerMvp
         };

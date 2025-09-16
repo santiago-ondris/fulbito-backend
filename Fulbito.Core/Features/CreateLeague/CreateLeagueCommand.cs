@@ -20,9 +20,11 @@ public record CreateLeagueCommand
     
     public bool IsWinStreakEnabled { get; set; }
     public int PointsPerWinInStreak { get; set; } // Solo si IsWinStreakEnabled = true
+    public int MinWinStreakToActivate { get; set; }
     
     public bool IsLossStreakEnabled { get; set; }
     public int PointsPerLossInStreak { get; set; } // Solo si IsLossStreakEnabled = true
+    public int MinLossStreakToActivate { get; set; }
     
     // Jugadores iniciales
     public List<CreatePlayerRequest> Players { get; set; } = new();

@@ -32,4 +32,7 @@ public class League : BaseEntity
     // Navigation properties
     public ICollection<Player> Players { get; set; } = new List<Player>();
     public ICollection<Match> Matches { get; set; } = new List<Match>();
+
+    public int MinWinStreakToActivate { get; set; } = 3; 
+    public int MinLossStreakToActivate { get; set; } = 3;
 }

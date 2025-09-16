@@ -159,7 +159,7 @@ public class AddMatchHandler
             TeamNumber = teamNumber,
             Goals = league.IsGoalsEnabled ? playerRequest.Goals : 0,
             Result = teamResult,
-            IsMvp = command.MvpPlayerId.HasValue && command.MvpPlayerId.Value == playerId
+            IsMvp = !string.IsNullOrEmpty(command.MvpPlayerId) && command.MvpPlayerId == playerId.ToString()
         };
 
         playerMatches.Add(playerMatch);

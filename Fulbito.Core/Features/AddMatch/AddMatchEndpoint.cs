@@ -72,5 +72,5 @@ public record AddMatchRequest
     
     public List<PlayerInTeamRequest> Team1Players { get; set; } = new();
     public List<PlayerInTeamRequest> Team2Players { get; set; } = new();
-    public Guid? MvpPlayerId { get; set; }
+    public string? MvpPlayerId { get; set; }
 }

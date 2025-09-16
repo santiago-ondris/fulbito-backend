@@ -21,10 +21,12 @@ public class LeagueStatisticsCalcualtor
             // Calcular rachas actuales
             var currentWinStreak = league.IsWinStreakEnabled ? CalculateCurrentWinStreak(playerMatches) : (int?)null;
             var currentLossStreak = league.IsLossStreakEnabled ? CalculateCurrentLossStreak(playerMatches) : (int?)null;
+
+            var mvpCount = league.IsMvpEnabled ? playerMatches.Count(pm => pm.IsMvp) : 0;
             
             // Calcular puntaje total
             var totalPoints = CalculateTotalPoints(league, matchesPlayed, matchesWon, matchesDrawn, matchesLost, 
-                                                 goalsFor ?? 0, currentWinStreak ?? 0, currentLossStreak ?? 0);
+                                                 goalsFor ?? 0, currentWinStreak ?? 0, currentLossStreak ?? 0, mvpCount);
             
             // Calcular tasas
             var attendanceRate = totalMatches > 0 ? (decimal)matchesPlayed / totalMatches * 100 : 0;
@@ -62,7 +64,7 @@ public class LeagueStatisticsCalcualtor
     }
 
     public static int CalculateTotalPoints(League league, int matchesPlayed, int matchesWon, int matchesDrawn, 
-                                   int matchesLost, int goalsFor, int currentWinStreak, int currentLossStreak)
+                                   int matchesLost, int goalsFor, int currentWinStreak, int currentLossStreak, int mvpCount)
     {
         var total = 0;
         
@@ -76,11 +78,14 @@ public class LeagueStatisticsCalcualtor
         if (league.IsGoalsEnabled)
             total += goalsFor * league.PointsPerGoal;
             
-        if (league.IsWinStreakEnabled && currentWinStreak > 0)
-            total += currentWinStreak * league.PointsPerWinInStreak;
+        if (league.IsWinStreakEnabled && currentWinStreak >= league.MinWinStreakToActivate)
+            total += (currentWinStreak - league.MinWinStreakToActivate + 1) * league.PointsPerWinInStreak;
             
-        if (league.IsLossStreakEnabled && currentLossStreak > 0)
-            total += currentLossStreak * league.PointsPerLossInStreak; // Esto debería ser negativo
+        if (league.IsLossStreakEnabled && currentLossStreak >= league.MinLossStreakToActivate)
+            total += (currentLossStreak - league.MinLossStreakToActivate + 1) * league.PointsPerLossInStreak;
+
+        if (league.IsMvpEnabled)
+            total += mvpCount * league.PointsPerMvp;    
             
         return total;
     }

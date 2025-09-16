@@ -72,8 +72,10 @@ public class ViewLeagueHandler
                 IsGoalsEnabled = league.IsGoalsEnabled,
                 PointsPerGoal = league.PointsPerGoal,
                 IsWinStreakEnabled = league.IsWinStreakEnabled,
+                MinWinStreakToActivate = league.MinWinStreakToActivate,
                 PointsPerWinInStreak = league.PointsPerWinInStreak,
                 IsLossStreakEnabled = league.IsLossStreakEnabled,
+                MinLossStreakToActivate = league.MinLossStreakToActivate,
                 PointsPerLossInStreak = league.PointsPerLossInStreak,
                 IsMvpEnabled = league.IsMvpEnabled,
                 PointsPerMvp = league.PointsPerMvp

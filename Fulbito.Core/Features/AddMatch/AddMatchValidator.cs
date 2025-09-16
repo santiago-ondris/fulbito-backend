@@ -122,14 +122,31 @@ public class AddMatchValidator : AbstractValidator<AddMatchCommand>
 
     private async Task<bool> MvpPlayerIsInMatch(AddMatchCommand command, CancellationToken cancellationToken)
     {
-        if (!command.MvpPlayerId.HasValue)
+        if (string.IsNullOrEmpty(command.MvpPlayerId))
             return true;
 
-        var allPlayerIds = await Task.Run(() => command.Team1Players.Concat(command.Team2Players)
-            .Where(p => p.PlayerId.HasValue)
-            .Select(p => p.PlayerId!.Value)
-            .ToList());
+        // Si empieza con "new-", es un jugador nuevo
+        if (command.MvpPlayerId.StartsWith("new-"))
+        {
+            var allNewPlayerIds = command.Team1Players.Concat(command.Team2Players)
+                .Where(p => p.NewPlayer != null)
+                .Select(p => p.NewPlayer != null ? $"new-{p.NewPlayer.FirstName}-{p.NewPlayer.LastName}" : null)
+                .ToList();
+            
+            return await Task.Run(() => allNewPlayerIds.Contains(command.MvpPlayerId));
+        }
 
-        return allPlayerIds.Contains(command.MvpPlayerId.Value);
+        // Si no, es un jugador existente
+        if (Guid.TryParse(command.MvpPlayerId, out var mvpId))
+        {
+            var allPlayerIds = command.Team1Players.Concat(command.Team2Players)
+                .Where(p => p.PlayerId.HasValue)
+                .Select(p => p.PlayerId!.Value)
+                .ToList();
+            
+            return allPlayerIds.Contains(mvpId);
+        }
+
+        return false;
     }
 }

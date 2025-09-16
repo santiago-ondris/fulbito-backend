@@ -34,9 +34,11 @@ public record LeagueScoring
     
     public bool IsWinStreakEnabled { get; set; }
     public int PointsPerWinInStreak { get; set; }
+    public int MinWinStreakToActivate { get; set; }
     
     public bool IsLossStreakEnabled { get; set; }
     public int PointsPerLossInStreak { get; set; }
+    public int MinLossStreakToActivate { get; set; }
 
     public bool IsMvpEnabled { get; set; }
     public int PointsPerMvp { get; set; }
