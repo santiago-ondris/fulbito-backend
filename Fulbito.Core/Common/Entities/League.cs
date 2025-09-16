@@ -19,6 +19,9 @@ public class League : BaseEntity
     // Configuración de métricas opcionales
     public bool IsGoalsEnabled { get; set; }
     public int PointsPerGoal { get; set; }
+
+    public bool IsMvpEnabled { get; set; }
+    public int PointsPerMvp { get; set; }
     
     public bool IsWinStreakEnabled { get; set; }
     public int PointsPerWinInStreak { get; set; }

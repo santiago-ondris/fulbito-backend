@@ -35,7 +35,8 @@ public static class AddMatchEndpoint
                 Team2Score = request.Team2Score,
                 MatchDate = request.MatchDate,
                 Team1Players = request.Team1Players,
-                Team2Players = request.Team2Players
+                Team2Players = request.Team2Players,
+                MvpPlayerId = request.MvpPlayerId
             };
 
             Console.WriteLine($"Command created with UserId: {userId}, validating...");
@@ -71,4 +72,5 @@ public record AddMatchRequest
     
     public List<PlayerInTeamRequest> Team1Players { get; set; } = new();
     public List<PlayerInTeamRequest> Team2Players { get; set; } = new();
+    public Guid? MvpPlayerId { get; set; }
 }

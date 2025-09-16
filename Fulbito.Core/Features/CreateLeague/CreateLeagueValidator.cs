@@ -48,5 +48,11 @@ public class CreateLeagueValidator : AbstractValidator<CreateLeagueCommand>
             RuleFor(x => x.PointsPerLossInStreak)
                 .NotNull().WithMessage("Debe especificar puntos por racha de derrota cuando está habilitada");
         });
+        
+        When(x => x.IsMvpEnabled, () =>
+        {
+            RuleFor(x => x.PointsPerMvp)
+                .NotNull().WithMessage("Debe especificar puntos por MVP cuando está habilitado");
+        });
     }
 }

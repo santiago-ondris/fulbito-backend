@@ -37,6 +37,9 @@ public record LeagueScoring
     
     public bool IsLossStreakEnabled { get; set; }
     public int PointsPerLossInStreak { get; set; }
+
+    public bool IsMvpEnabled { get; set; }
+    public int PointsPerMvp { get; set; }
 }
 
 public record PlayerStanding

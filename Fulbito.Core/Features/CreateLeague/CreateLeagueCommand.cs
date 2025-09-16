@@ -15,6 +15,8 @@ public record CreateLeagueCommand
     // Métricas opcionales
     public bool IsGoalsEnabled { get; set; }
     public int PointsPerGoal { get; set; } // Solo si IsGoalsEnabled = true
+    public bool IsMvpEnabled { get; set; }
+    public int PointsPerMvp { get; set; }
     
     public bool IsWinStreakEnabled { get; set; }
     public int PointsPerWinInStreak { get; set; } // Solo si IsWinStreakEnabled = true

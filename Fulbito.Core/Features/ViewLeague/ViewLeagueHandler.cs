@@ -74,7 +74,9 @@ public class ViewLeagueHandler
                 IsWinStreakEnabled = league.IsWinStreakEnabled,
                 PointsPerWinInStreak = league.PointsPerWinInStreak,
                 IsLossStreakEnabled = league.IsLossStreakEnabled,
-                PointsPerLossInStreak = league.PointsPerLossInStreak
+                PointsPerLossInStreak = league.PointsPerLossInStreak,
+                IsMvpEnabled = league.IsMvpEnabled,
+                PointsPerMvp = league.PointsPerMvp
             },
             PlayerStandings = playerStandings,
             Matches = matchSummaries

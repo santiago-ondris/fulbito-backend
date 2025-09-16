@@ -56,7 +56,9 @@ public class CreateLeagueHandler
             IsWinStreakEnabled = command.IsWinStreakEnabled,
             PointsPerWinInStreak = command.PointsPerWinInStreak,
             IsLossStreakEnabled = command.IsLossStreakEnabled,
-            PointsPerLossInStreak = command.PointsPerLossInStreak
+            PointsPerLossInStreak = command.PointsPerLossInStreak,
+            IsMvpEnabled = command.IsMvpEnabled,
+            PointsPerMvp = command.PointsPerMvp
         };
 
         _context.Leagues.Add(league);

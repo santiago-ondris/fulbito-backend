@@ -110,62 +110,63 @@ public class AddMatchHandler
         var playerMatches = new List<PlayerMatch>();
 
         // Procesar Team 1
-        ProcessTeamPlayers(command.Team1Players, 1, match, createdPlayers, league, playerMatches);
+        ProcessTeamPlayers(command.Team1Players, 1, match, createdPlayers, league, playerMatches, command);
 
         // Procesar Team 2  
-        ProcessTeamPlayers(command.Team2Players, 2, match, createdPlayers, league, playerMatches);
+        ProcessTeamPlayers(command.Team2Players, 2, match, createdPlayers, league, playerMatches, command);
 
         _context.PlayerMatches.AddRange(playerMatches);
         await _context.SaveChangesAsync();
     }
 
-  private static void ProcessTeamPlayers(List<PlayerInTeamRequest> teamPlayers, int teamNumber,
-                                      Match match, Dictionary<string, Player> createdPlayers,
-                                      League league, List<PlayerMatch> playerMatches)
-  {
-    // Determinar resultado para este equipo
-    MatchResult teamResult;
-    if (teamNumber == 1)
+    private static void ProcessTeamPlayers(List<PlayerInTeamRequest> teamPlayers, int teamNumber,
+                                        Match match, Dictionary<string, Player> createdPlayers,
+                                        League league, List<PlayerMatch> playerMatches, AddMatchCommand command)
     {
-      teamResult = match.Team1Score > match.Team2Score ? MatchResult.Win :
-                  match.Team1Score < match.Team2Score ? MatchResult.Loss : MatchResult.Draw;
+        // Determinar resultado para este equipo
+        MatchResult teamResult;
+        if (teamNumber == 1)
+        {
+        teamResult = match.Team1Score > match.Team2Score ? MatchResult.Win :
+                    match.Team1Score < match.Team2Score ? MatchResult.Loss : MatchResult.Draw;
+        }
+        else
+        {
+        teamResult = match.Team2Score > match.Team1Score ? MatchResult.Win :
+                    match.Team2Score < match.Team1Score ? MatchResult.Loss : MatchResult.Draw;
+        }
+
+        foreach (var playerRequest in teamPlayers)
+        {
+        Guid playerId;
+
+        if (playerRequest.PlayerId.HasValue)
+        {
+            // Jugador existente
+            playerId = playerRequest.PlayerId.Value;
+        }
+        else
+        {
+            // Jugador nuevo - obtener de los creados
+            var key = $"{playerRequest.NewPlayer!.FirstName}|{playerRequest.NewPlayer.LastName}";
+            playerId = createdPlayers[key].Id;
+        }
+
+        var playerMatch = new PlayerMatch
+        {
+            PlayerId = playerId,
+            MatchId = match.Id,
+            TeamNumber = teamNumber,
+            Goals = league.IsGoalsEnabled ? playerRequest.Goals : 0,
+            Result = teamResult,
+            IsMvp = command.MvpPlayerId.HasValue && command.MvpPlayerId.Value == playerId
+        };
+
+        playerMatches.Add(playerMatch);
+        }
     }
-    else
-    {
-      teamResult = match.Team2Score > match.Team1Score ? MatchResult.Win :
-                  match.Team2Score < match.Team1Score ? MatchResult.Loss : MatchResult.Draw;
-    }
 
-    foreach (var playerRequest in teamPlayers)
-    {
-      Guid playerId;
-
-      if (playerRequest.PlayerId.HasValue)
-      {
-        // Jugador existente
-        playerId = playerRequest.PlayerId.Value;
-      }
-      else
-      {
-        // Jugador nuevo - obtener de los creados
-        var key = $"{playerRequest.NewPlayer!.FirstName}|{playerRequest.NewPlayer.LastName}";
-        playerId = createdPlayers[key].Id;
-      }
-
-      var playerMatch = new PlayerMatch
-      {
-        PlayerId = playerId,
-        MatchId = match.Id,
-        TeamNumber = teamNumber,
-        Goals = league.IsGoalsEnabled ? playerRequest.Goals : 0,
-        Result = teamResult
-      };
-
-      playerMatches.Add(playerMatch);
-    }
-  }
-
-  private Guid? GetCurrentUserId()
+    private Guid? GetCurrentUserId()
     {
         var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier);
         return userIdClaim != null && Guid.TryParse(userIdClaim.Value, out var userId) ? userId : null;

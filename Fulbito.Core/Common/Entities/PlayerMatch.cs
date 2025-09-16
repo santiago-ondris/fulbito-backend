@@ -12,6 +12,7 @@ public class PlayerMatch : BaseEntity
     // Datos del partido
     public int TeamNumber { get; set; } // 1 o 2
     public int Goals { get; set; } = 0; // Solo si está habilitado en la liga
+    public bool IsMvp { get; set; } = false;
     
     // Resultado para este jugador (calculado)
     public MatchResult Result { get; set; }

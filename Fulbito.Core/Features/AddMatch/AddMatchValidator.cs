@@ -41,7 +41,8 @@ public class AddMatchValidator : AbstractValidator<AddMatchCommand>
             .MustAsync(LeagueExistsAndBelongsToUser).WithMessage("La liga no existe o no pertenece al usuario")
             .MustAsync(PlayersPerTeamMatchConfiguration).WithMessage("La cantidad de jugadores por equipo no coincide con la configuración de la liga")
             .MustAsync(AllPlayerIdsExistInLeague).WithMessage("Uno o más jugadores no pertenecen a la liga")
-            .MustAsync(NoRepeatedPlayers).WithMessage("Un jugador no puede estar en ambos equipos");
+            .MustAsync(NoRepeatedPlayers).WithMessage("Un jugador no puede estar en ambos equipos")
+            .MustAsync(MvpPlayerIsInMatch).WithMessage("El jugador MVP debe estar participando en el partido");
     }
 
     private void ValidatePlayer(InlineValidator<PlayerInTeamRequest> playerValidator)
@@ -117,5 +118,18 @@ public class AddMatchValidator : AbstractValidator<AddMatchCommand>
             .ToList();
 
         return await Task.Run(() => newPlayers.Count == newPlayers.Distinct().Count());
+    }
+
+    private async Task<bool> MvpPlayerIsInMatch(AddMatchCommand command, CancellationToken cancellationToken)
+    {
+        if (!command.MvpPlayerId.HasValue)
+            return true;
+
+        var allPlayerIds = await Task.Run(() => command.Team1Players.Concat(command.Team2Players)
+            .Where(p => p.PlayerId.HasValue)
+            .Select(p => p.PlayerId!.Value)
+            .ToList());
+
+        return allPlayerIds.Contains(command.MvpPlayerId.Value);
     }
 }
