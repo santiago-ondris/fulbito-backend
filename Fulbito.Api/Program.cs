@@ -11,6 +11,7 @@ using Fulbito.Core.Features.ViewLeague;
 using Fulbito.Core.Features.AddMatch;
 using Fulbito.Core.Features.ManageLeague;
 using Fulbito.Core.Features.AdminLeague;
+using Fulbito.Core.Features.ViewMatchups;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +76,7 @@ builder.Services.AddViewLeagueFeatures();
 builder.Services.AddMatchFeatures();
 builder.Services.AddManageLeagueFeatures();
 builder.Services.AddAdminLeagueFeatures();
+builder.Services.AddViewMatchupsFeatures();
 
 var app = builder.Build();
 
@@ -98,5 +100,6 @@ app.MapViewLeagueEndpoints();
 app.MapAddMatchEndpoints();
 app.MapManageLeagueEndpoints();
 app.MapAdminLeagueEndpoints();
+app.MapViewMatchupsEndpoints();
 
 app.Run();
