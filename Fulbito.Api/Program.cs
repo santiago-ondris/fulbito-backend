@@ -96,6 +96,15 @@ builder.Services.AddUpdatePlayerImageFeatures();
 
 var app = builder.Build();
 
+if (app.Environment.IsProduction())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        context.Database.Migrate();
+    }
+}
+
 // Configure the pipeline.
 if (app.Environment.IsDevelopment())
 {
