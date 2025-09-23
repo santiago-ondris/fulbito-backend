@@ -65,6 +65,7 @@ public record PlayerStanding
     public int? GoalsFor { get; set; }
     public int? CurrentWinStreak { get; set; }
     public int? CurrentLossStreak { get; set; }
+    public int? MvpsWon { get; set; }
     
     // Tasas calculadas (solo estadísticas, no puntaje)
     public decimal AttendanceRate { get; set; } // (partidos jugados / total partidos liga) * 100
@@ -78,11 +79,11 @@ public record MatchSummary
     public Guid MatchId { get; set; }
     public DateTime MatchDate { get; set; }
     public int Team1Score { get; set; }
-    public int Team2Score { get; set; }
-    
+    public int Team2Score { get; set; }    
     // Jugadores de cada equipo
     public List<PlayerInMatch> Team1Players { get; set; } = new();
     public List<PlayerInMatch> Team2Players { get; set; } = new();
+    public Guid? MvpPlayerId { get; set; }
 }
 
 public record PlayerInMatch

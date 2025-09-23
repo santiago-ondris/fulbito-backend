@@ -21,6 +21,7 @@ public class LeagueStatisticsCalcualtor
             // Calcular rachas actuales
             var currentWinStreak = league.IsWinStreakEnabled ? CalculateCurrentWinStreak(playerMatches) : (int?)null;
             var currentLossStreak = league.IsLossStreakEnabled ? CalculateCurrentLossStreak(playerMatches) : (int?)null;
+            
 
             var mvpCount = league.IsMvpEnabled ? playerMatches.Count(pm => pm.IsMvp) : 0;
             
@@ -33,6 +34,11 @@ public class LeagueStatisticsCalcualtor
             var winRate = matchesPlayed > 0 ? (decimal)matchesWon / matchesPlayed * 100 : 0;
             var drawRate = matchesPlayed > 0 ? (decimal)matchesDrawn / matchesPlayed * 100 : 0;
             var lossRate = matchesPlayed > 0 ? (decimal)matchesLost / matchesPlayed * 100 : 0;
+
+            var mvpCounts = league.Matches
+                .SelectMany(m => m.PlayerMatches.Where(pm => pm.IsMvp))
+                .GroupBy(pm => pm.PlayerId)
+                .ToDictionary(g => g.Key, g => g.Count());
 
             return new PlayerStanding
             {
@@ -48,6 +54,7 @@ public class LeagueStatisticsCalcualtor
                 GoalsFor = goalsFor,
                 CurrentWinStreak = currentWinStreak,
                 CurrentLossStreak = currentLossStreak,
+                MvpsWon = league.IsMvpEnabled ? mvpCounts.GetValueOrDefault(player.Id, 0) : null,
                 AttendanceRate = Math.Round(attendanceRate, 1),
                 WinRate = Math.Round(winRate, 1),
                 DrawRate = Math.Round(drawRate, 1),

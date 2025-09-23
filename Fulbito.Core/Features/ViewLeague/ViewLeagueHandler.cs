@@ -54,7 +54,8 @@ public class ViewLeagueHandler
                         FirstName = pm.Player.FirstName,
                         LastName = pm.Player.LastName,
                         Goals = league.IsGoalsEnabled ? pm.Goals : 0
-                    }).ToList()
+                    }).ToList(),
+                MvpPlayerId = match.PlayerMatches.FirstOrDefault(pm => pm.IsMvp)?.PlayerId  
             }).ToList();
 
         return new ViewLeagueResponse
