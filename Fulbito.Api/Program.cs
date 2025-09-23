@@ -115,7 +115,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(frontendOrigin)
+        policy.WithOrigins(frontendOrigin, "https://fulbito-frontend-ruddy.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
