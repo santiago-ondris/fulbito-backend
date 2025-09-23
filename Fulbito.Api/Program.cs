@@ -12,6 +12,8 @@ using Fulbito.Core.Features.AddMatch;
 using Fulbito.Core.Features.ManageLeague;
 using Fulbito.Core.Features.AdminLeague;
 using Fulbito.Core.Features.ViewMatchups;
+using Fulbito.Core.Common.Configuration;
+using Fulbito.Core.Features.UpdatePlayerImage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,19 @@ builder.Services.AddHttpContextAccessor();
 // Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.Configure<CloudinarySettings>(
+    builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<CloudinaryDotNet.Cloudinary>(provider =>
+{
+    var config = builder.Configuration.GetSection("Cloudinary");
+    var account = new CloudinaryDotNet.Account(
+        config["CloudName"],
+        config["ApiKey"],
+        config["ApiSecret"]
+    );
+    return new CloudinaryDotNet.Cloudinary(account);
+});    
 
 // Identity
 builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
@@ -77,6 +92,7 @@ builder.Services.AddMatchFeatures();
 builder.Services.AddManageLeagueFeatures();
 builder.Services.AddAdminLeagueFeatures();
 builder.Services.AddViewMatchupsFeatures();
+builder.Services.AddUpdatePlayerImageFeatures();
 
 var app = builder.Build();
 

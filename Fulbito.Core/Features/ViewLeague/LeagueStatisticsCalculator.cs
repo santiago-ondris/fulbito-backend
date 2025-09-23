@@ -39,6 +39,7 @@ public class LeagueStatisticsCalcualtor
                 PlayerId = player.Id,
                 FirstName = player.FirstName,
                 LastName = player.LastName,
+                ImageUrl = player.ImageUrl,
                 TotalPoints = totalPoints,
                 MatchesPlayed = matchesPlayed,
                 MatchesWon = matchesWon,
@@ -50,7 +51,7 @@ public class LeagueStatisticsCalcualtor
                 AttendanceRate = Math.Round(attendanceRate, 1),
                 WinRate = Math.Round(winRate, 1),
                 DrawRate = Math.Round(drawRate, 1),
-                LossRate = Math.Round(lossRate, 1)
+                LossRate = Math.Round(lossRate, 1),
             };
         }).ToList();
 

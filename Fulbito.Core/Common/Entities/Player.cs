@@ -9,6 +9,8 @@ public class Player : BaseEntity
     public Guid LeagueId { get; set; }
     public League League { get; set; } = null!;
     
+    public string? ImageUrl { get; set; }
+    
     // Navigation properties
     public ICollection<PlayerMatch> PlayerMatches { get; set; } = new List<PlayerMatch>();
 }

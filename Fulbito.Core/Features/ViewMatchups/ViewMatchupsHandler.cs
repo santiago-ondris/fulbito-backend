@@ -126,14 +126,16 @@ public class ViewMatchupsHandler
                     Id = player1.Id,
                     FirstName = player1.FirstName,
                     LastName = player1.LastName,
-                    FullName = $"{player1.FirstName} {player1.LastName}"
+                    FullName = $"{player1.FirstName} {player1.LastName}",
+                    ImageUrl = player1.ImageUrl
                 },
                 Player2 = new PlayerSummary
                 {
                     Id = player2.Id,
                     FirstName = player2.FirstName,
                     LastName = player2.LastName,
-                    FullName = $"{player2.FirstName} {player2.LastName}"
+                    FullName = $"{player2.FirstName} {player2.LastName}",
+                    ImageUrl = player2.ImageUrl
                 },
                 Stats = new MatchupStats
                 {
