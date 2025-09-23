@@ -171,4 +171,14 @@ app.MapManageLeagueEndpoints();
 app.MapAdminLeagueEndpoints();
 app.MapViewMatchupsEndpoints();
 
+app.MapGet("/", () => Results.Json(new
+{
+    status = "ok",
+    service = "Fulbito API",
+    env = app.Environment.EnvironmentName,
+    time = DateTime.UtcNow
+}));
+
+app.MapGet("/healthz", () => Results.Text("ok"));
+
 app.Run();
