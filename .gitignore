@@ -24,9 +24,6 @@ bld/
 *.userosscache
 *.sln.docstates
 
-# Entity Framework
-**/Migrations/
-
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
